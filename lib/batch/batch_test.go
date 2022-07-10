@@ -1,9 +1,11 @@
 package batch
 
 import (
-	"github.com/stretchr/testify/assert"
+	"fmt"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_getButch(t *testing.T) {
@@ -29,6 +31,8 @@ func Test_getButch(t *testing.T) {
 			wantTime := start.Add(time.Duration(tt.args.n/tt.args.pool) * 100)
 			actualRes := getBatch(tt.args.n, tt.args.pool)
 			since := time.Since(start).Milliseconds()
+			fmt.Println("actualRes:", actualRes)
+			fmt.Println("wantRes:", tt.wantRes)
 			assert.WithinDuration(t, wantTime, start.Add(time.Duration(since)), time.Nanosecond*200)
 			assert.ElementsMatch(t, tt.wantRes, actualRes)
 		})
